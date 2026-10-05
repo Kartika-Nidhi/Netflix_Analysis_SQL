@@ -85,6 +85,7 @@ CREATE INDEX idx_title_genres_genre ON title_genres(genre_id);
 CREATE INDEX idx_title_cast_person ON title_cast(person_id);
 
 
+--Individual Table Inspection
 
 -- 32 Duplicates in Person Table
 # %%sql

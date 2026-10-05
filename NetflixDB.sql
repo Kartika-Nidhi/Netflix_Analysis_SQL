@@ -86,4 +86,16 @@ CREATE INDEX idx_title_cast_person ON title_cast(person_id);
 
 
 
+-- 32 Duplicates in Person Table
+# %%sql
+
+# WITH duplicates AS (
+#     SELECT person_id, full_name, 
+#     ROW_NUMBER() OVER(PARTITION BY full_name ORDER BY person_id) AS rn
+#     FROM person
+# )
+
+# DELETE FROM person 
+# WHERE person_id IN (SELECT person_id FROM duplicates WHERE rn > 1);
+
 

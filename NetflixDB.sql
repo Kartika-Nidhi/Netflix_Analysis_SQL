@@ -87,7 +87,8 @@ CREATE INDEX idx_title_cast_person ON title_cast(person_id);
 
 --Individual Table Inspection
 
--- 32 Duplicates in Person Table
+-- Duplicates Removal
+-- Persons Table
 # %%sql
 
 # WITH duplicates AS (
@@ -99,4 +100,27 @@ CREATE INDEX idx_title_cast_person ON title_cast(person_id);
 # DELETE FROM person 
 # WHERE person_id IN (SELECT person_id FROM duplicates WHERE rn > 1);
 
+-- Title Director Table
+# %%sql
 
+# WITH duplicates AS (
+#     SELECT person_id,
+#     ROW_NUMBER() OVER(PARTITION BY person_id ORDER BY person_id) AS rn
+#     FROM title_directors
+# )
+
+# DELETE FROM title_directors 
+# WHERE person_id IN (SELECT person_id FROM duplicates WHERE rn > 1);
+
+
+--Title Cast Table
+# %%sql
+
+# WITH duplicates AS (
+#     SELECT show_id, person_id,
+#     ROW_NUMBER() OVER(PARTITION BY person_id ORDER BY person_id) AS rn
+#     FROM title_cast
+# )
+
+# DELETE FROM title_cast
+# WHERE person_id IN (SELECT person_id FROM duplicates WHERE rn > 1);

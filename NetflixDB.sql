@@ -124,3 +124,8 @@ CREATE INDEX idx_title_cast_person ON title_cast(person_id);
 
 # DELETE FROM title_cast
 # WHERE person_id IN (SELECT person_id FROM duplicates WHERE rn > 1);
+
+
+-- Chainging rating_code dtype from VARCHAR to FLOAT
+#ALTER TABLE ratings
+#MODIFY COLUMN rating_code FLOAT;
